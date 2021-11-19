@@ -1,0 +1,30 @@
+symbols:
+  - I
+  - F
+  - T
+  - E
+
+groups:
+  number: "[0-9]+"
+  lower: "[a-z]+"
+
+terminals:
+  - (
+  - )
+  - "*"
+  - +
+
+rules:
+  I:
+    - [lower]
+    - [I, lower]
+    - [I, number]
+  F:
+    - [I]
+    - [(, E, )]
+  T:
+    - [F]
+    - [T, "*", F]
+  E:
+    - [T]
+    - [E, "+", T]
