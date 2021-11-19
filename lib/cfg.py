@@ -11,17 +11,6 @@ class CFG:
     self.__rules = rules
     self.__groups = groups
     self.__terminals = terminals
-    self.__build_inverted()
-
-  def __build_inverted(self):
-    self.__inverted_cfg = {}
-
-    for i in self.__rules:
-      for j in self.__rules[i]:
-        if j in self.__inverted_cfg:
-          self.__inverted_cfg[j].append(i)
-        else:
-          self.__inverted_cfg[j] = [i]
 
   @classmethod
   def loadFromJSON(cls, path: str):
@@ -40,6 +29,21 @@ class CFG:
     f.close()
 
     return cls(data.rules, data.groups, data.terminals)
+  
+  @property
+  def groups(self):
+    """Mengembalikan groups CFG"""
+    return self.__groups
+  
+  @property
+  def terminals(self):
+    """Mengembalikan terminal pada CFG"""
+    return self.__terminals
+  
+  @property
+  def rules(self):
+    """Mendapatkan data CFG"""
+    return self.__rules
   
   def saveToYAML(self, path: str):
     """Simpan CFG ke file YAML"""
@@ -71,19 +75,28 @@ class CFG:
     
     lines = []
     for i in self.__rules:
-      strRule = f"{i} -> {' | '.join(self.__rules[i])}"
+      symbolStr = []
+      for j in self.__rules[i]:
+        symbolStr.append(" ".join(j))
+
+      strRule = f"{i} -> {' | '.join(symbolStr)}"
       lines.append(strRule)
     
     f.writelines(lines)
     f.close()
   
-  def getCFGTable(self):
-    """Mendapatkan data CFG"""
-    return self.__rules
-  
   def getInvertedTable(self):
     """Mendapatkan simbol pembangkit dari key"""
-    return self.__inverted_cfg
+    inverted_cfg = {}
+
+    for i in self.__rules:
+      for j in self.__rules[i]:
+        if j in inverted_cfg:
+          inverted_cfg[j].append(i)
+        else:
+          inverted_cfg[j] = [i]
+
+    return inverted_cfg
   
   def getVariables(self) -> list:
     """Mendapatkan semua Variabel"""
