@@ -8,4 +8,3 @@ class Elimination(ABC):
   @abstractmethod
   def eliminate(self) -> CFG:
     pass
-
