@@ -38,7 +38,7 @@ class CFG:
     f = open(path)
     data = yaml.safe_load(f)
     f.close()
-    
+
     return cls(data.rules, data.groups, data.terminals)
   
   def saveToYAML(self, path: str):
@@ -77,11 +77,11 @@ class CFG:
     f.writelines(lines)
     f.close()
   
-  def getCFG(self):
+  def getCFGTable(self):
     """Mendapatkan data CFG"""
     return self.__rules
   
-  def getInverted(self):
+  def getInvertedTable(self):
     """Mendapatkan simbol pembangkit dari key"""
     return self.__inverted_cfg
   
