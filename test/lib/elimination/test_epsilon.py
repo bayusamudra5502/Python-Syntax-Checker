@@ -81,3 +81,30 @@ def test_03():
     b = ans[i]
 
     assert set(a) == set(b)
+
+def test_04():
+  data = {
+    "groups":{},
+    "terminals":["1","0"],
+    "rules":{
+      "S": [["T","U"],["T","1","U"],["0"]],
+      "T": [["S"],["S","T"],["1"]],
+      "U": [["1","0","S"]]
+    }
+  }
+
+  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  ee = EpsilonElimination(obj)
+
+  res = ee.eliminate()
+  ans = {
+    "S": (("T","U"),("T","1","U"),("0",)),
+    "T": (("S",),("S","T"),("1",)),
+    "U": (("1","0","S"),)
+  }
+
+  for i in ans:
+    a = res.rules[i]
+    b = ans[i]
+
+    assert set(a) == set(b)

@@ -23,6 +23,7 @@ class EpsilonElimination(Elimination):
       return ((),)
     elif rule[0] != nullableSymbol:
       # Rekurens 1: Saat simbol pertama bukan merupakan nullableSymbol,
+      #   tidak perlu membuat  kemungkinan epsilon
       lastResult = list(self.__rule_adder(rule[1:], nullableSymbol))
 
       for i in range(len(lastResult)):
@@ -30,7 +31,8 @@ class EpsilonElimination(Elimination):
       
       return tuple(lastResult)
     else:
-      # Rekurens 2: Saat simbol pertama adalah nullable
+      # Rekurens 2: Saat simbol pertama adalah nullable, perlu membuat
+      #   dua kasus, yaitu saat epsilon dan saat tidak epsilon
       lastResult = self.__rule_adder(rule[1:], nullableSymbol)
       appended = []
 
@@ -51,8 +53,11 @@ class EpsilonElimination(Elimination):
 
     for i in rulesSet:
       if () in rulesSet[i]:
+        # Membuang rule epsilon
         rulesSet[i].remove(())
 
+        # Menambahkan kasus epsilon pada tiap rule sebagai
+        # konsekuensi dibuangnya rule epsilon
         for j in rulesSet:
           adder = set()
           for rule in rulesSet[j]:
