@@ -55,14 +55,18 @@ def concatParser(regex: str) -> tuple[str]:
   splitted = []
   bracketLevel = 0
   isSkipped = False
+  isRange = False
 
   for i in regex:
-    if i == "\\":
+    if i == "\\" and bracketLevel == 0:
       isSkipped = True
       splitted.append("\\")
-    elif isSkipped:
+    elif isSkipped :
       splitted[-1] += i
       isSkipped = False
+    elif isRange:
+      splitted[-1] += i
+      isRange = False
     elif i == "(":
       if bracketLevel > 0:
         splitted[-1] += "("
@@ -79,6 +83,9 @@ def concatParser(regex: str) -> tuple[str]:
     elif i == " ":
       pass
     elif i == "*" or bracketLevel > 0:
+      splitted[-1] += i
+    elif i == "-":
+      isRange = True
       splitted[-1] += i
     else:
       splitted.append(i)

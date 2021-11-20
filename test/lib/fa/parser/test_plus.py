@@ -30,5 +30,7 @@ def test_02():
 def test_03():
   plus_negative("((2+)")
   plus_negative("(2+))")
-  plus_negative("(2+\\)")
   plus_negative("\\(2+)")
+
+def test_04():
+  plus_negative("(2+\\)")

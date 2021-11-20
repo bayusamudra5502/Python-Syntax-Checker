@@ -25,6 +25,7 @@ def test_02():
   bracket_tester("((1) + 3)","(1)+3", True)
   bracket_tester("(1 + 2+3  +5)","1+2+3+5", True)
   bracket_tester("(1 + 2+3  +5+  \\  +12)","1+2+3+5+\\ +12", True)
+  bracket_tester("(A-Z+0-9+\\-)","A-Z+0-9+\\-", True)
 
 def test_03():
   bracket_negative("1+2)")

@@ -18,7 +18,10 @@ class State:
     return self.__sid
   
   def __eq__(self, __o) -> bool:
-    self.__sid == __o.sid
+    if __o != None:
+      return self.__sid == __o.sid
+    else:
+      return False
   
   def addTransition(self, rule: str, next):
     if rule in self.__transition:
@@ -26,12 +29,10 @@ class State:
     else:
       self.__transition[rule] = (next,)
 
-  def next(self, input:str):
+  def next(self, input:str) -> tuple:
     if not input in self.__transition:
-      return None
-    elif len(self.__transition[input]) == 1:
-      return self.__transition[input][0]
-    elif len(self.__transition[input]) > 1:
+      return tuple([])
+    else:
       return self.__transition[input]
 
   def eclose(self, lastSet: set = set()) -> tuple:
