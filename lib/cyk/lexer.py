@@ -2,7 +2,7 @@
 
 import re
 
-class lexer :
+class Lexer :
 
     def __init__(self,filename) :
         self.filename = filename
@@ -36,5 +36,5 @@ class lexer :
         return self.tokens
         
 
-a = lexer("input.py")
+a = Lexer("input.py")
 print(a.tokenize())
