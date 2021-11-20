@@ -84,3 +84,23 @@ def test_properti():
     assert False
   except:
     assert True
+
+def test_grup():
+  data = {
+    "groups":{
+      "number": "(0-9)(0-9)*",
+      "lower": "(a-z)(a-z)*"
+    },
+    "terminals":["(",")","*","+"],
+    "rules":{
+      "I": [["lower"], ["I", "lower"], ["I", "number"]],
+      "F": [["I"], ["(", "E", ")"]],
+      "T": [["F"], ["T", "*", "F"]],
+      "E": [["T"], ["E", "+", "T"]]
+    }
+  }
+
+  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  
+  assert obj.groupCheck("number","123456")
+  assert obj.groupCheck("lower","ayamgoreng")

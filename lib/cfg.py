@@ -4,14 +4,14 @@ Modul ini digunakan untuk menyimpan model dari CFG yang digunakan
 
 import yaml
 import json
-import re
+from lib.fa.enfa import ENFA
 
 class CFG:
   def __init__(self, rules: dict, groups: dict, terminals: list) -> None:
     tmpRules = rules
 
     for i in tmpRules:
-      data = tmpRules[i]
+      data = list(tmpRules[i])
       for j in range(len(data)):
         data[j] = tuple(data[j])
       
@@ -112,13 +112,17 @@ class CFG:
     """Mendapatkan semua Variabel"""
     return tuple(self.__rules.keys())
   
-  def getGroupsChecker(self):
-    """Mendapatkan fungsi pemeriksa karakter dari groups"""
-    result = {}
-    for i in self.__groups:
-      result[i] = lambda x: re.match(self.__groups[i], x)
+  def groupCheck(self, groupName, value) -> bool:
+    """Memeriksa value berdasarkan rule RE yang telah didefinisikan pada groupName
     
-    return result
+    Bila groupName tidak ada, dimunculkan error."""
+    if groupName in self.__groups:
+      tmp = ENFA(self.__groups[groupName])
+      tmp.fit()
+
+      return tmp.match(value)
+    else:
+      raise Exception("groupName tidak diemukan")
 
   def isTerminal(self, symbol: str) -> bool:
     """Mengembalikan true bila symbol merupakan terminal"""
