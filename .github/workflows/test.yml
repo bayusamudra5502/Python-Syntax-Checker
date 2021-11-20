@@ -12,6 +12,7 @@ jobs:
         with:
           python-version: "3.9.x"
       - name: Caching Python
+        uses: actions/cache@v2
         with:
           path: ${{ env.pythonLocation }}
           key: tubes-${{ env.pythonLocation }}-${{ hashFiles('main.py') }}-${{ hashFiles('requirements.txt') }}
