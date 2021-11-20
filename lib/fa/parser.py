@@ -9,7 +9,7 @@ def plusParser(regex: str) -> tuple[str]:
   Regex bolehlah sembarang.
   
   Mengembalikan tuple of string dari operand operator +"""
-  splitted = []
+  splitted = [""]
   bracketLevel = 0
   isSkipped = False
 
@@ -20,19 +20,28 @@ def plusParser(regex: str) -> tuple[str]:
     elif isSkipped:
       splitted[-1] += i
       isSkipped = False
+    elif i == " ":
+      pass
     elif i == "(":
       splitted[-1] += i
       bracketLevel += 1
     elif i == ")":
       if bracketLevel > 0:
-        splitted[-1] += 1
+        splitted[-1] += i
         bracketLevel -= 1
       else:
         raise SyntaxError("Terdapat kurung yang belum dibuka") 
-    elif bracketLevel > 0 and i != "+":
+    elif bracketLevel > 0:
+      splitted[-1] += i
+    elif i == "+":
+      splitted.append("")
+    elif len(splitted) > 0:
       splitted[-1] += i
     else:
-      splitted.append("")
+      splitted.append(i)
+  
+  if bracketLevel > 0:
+    raise SyntaxError("Terdapat kurung yang belum ditutup") 
   
   return tuple(splitted)
   
@@ -73,8 +82,14 @@ def concatParser(regex: str) -> tuple[str]:
       splitted[-1] += i
     else:
       splitted.append(i)
+  
+  if bracketLevel > 0:
+    raise SyntaxError("Terdapat kurung yang belum ditutup") 
 
-  return tuple(splitted)
+  if len(splitted) > 0:
+    return tuple(splitted)
+  else:
+    return tuple([""])
 
 def rangeParser(regex: str) -> tuple:
   """Melakukan parsing untuk operator range pada regex.

@@ -21,6 +21,7 @@ def test_01():
   star_tester("1","1", False)
   star_tester("123","123", False)
   star_tester("(1+2+   3)","(1+2+3)", False)
+  star_tester("\\*a", "\\*a", False)
 
 def test_02():
   star_tester("1*", "1", True)
@@ -29,7 +30,11 @@ def test_02():
   star_tester("(1*+3+2**)****", "(1*+3+2**)", True)
   star_tester("a *", "a", True)
 
+
 def test_03():
   star_negative(" *")
   star_negative("*(1+2)")
   star_negative(" *(1)*")
+  
+def test_04():
+  star_tester("(\\*a)*", "(\\*a)", True)
