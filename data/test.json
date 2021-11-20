@@ -1,8 +1,8 @@
 {
   "groups": {
-    "number": "[0-9]",
-    "lower": "[a-z]",
-    "upper": "[A-Z]"
+    "number": "(0-9)(0-9)*",
+    "lower": "(a-z)(a-z)*",
+    "upper": "(A-Z)(A-Z)*"
   },
   "terminals": ["(", ")", "*", "+"],
   "rules": {
