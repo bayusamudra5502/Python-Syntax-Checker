@@ -59,4 +59,4 @@ class UnitElimination(Elimination):
       
       newRules[self.__label[i]] = tuple(newRule)
     
-    return CFG(newRules, super().groups, super().terminals)
+    return CFG(newRules, super().groups, list(super().terminals), super().start)

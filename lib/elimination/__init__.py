@@ -22,6 +22,10 @@ class Elimination(ABC):
   @property
   def terminals(self) -> tuple:
     return self.__rules.terminals
+  
+  @property
+  def start(self) -> str:
+    return self.__rules.start
 
   @abstractmethod
   def eliminate(self) -> CFG:

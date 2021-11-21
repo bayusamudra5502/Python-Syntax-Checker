@@ -15,7 +15,7 @@ def test_inverted():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
   invert_ans = {
     ("lower",) : ("I",),
     ("I","lower"): ("I",),
@@ -60,7 +60,7 @@ def test_properti():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
 
   assert obj.groups == jawaban["groups"]
   assert obj.terminals == jawaban["terminals"]
@@ -100,7 +100,7 @@ def test_grup():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
   
   assert obj.groupCheck("number","123456")
   assert obj.groupCheck("lower","ayamgoreng")

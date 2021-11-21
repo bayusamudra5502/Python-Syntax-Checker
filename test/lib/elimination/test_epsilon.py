@@ -12,7 +12,7 @@ def test_01():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
   ee = EpsilonElimination(obj)
 
   res = ee.eliminate()
@@ -39,7 +39,7 @@ def test_02():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
   ee = EpsilonElimination(obj)
 
   res = ee.eliminate()
@@ -66,7 +66,7 @@ def test_03():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
   ee = EpsilonElimination(obj)
 
   res = ee.eliminate()
@@ -93,7 +93,7 @@ def test_04():
     }
   }
 
-  obj = CFG(data["rules"], data["groups"], data["terminals"])
+  obj = CFG(data["rules"], data["groups"], data["terminals"], "I")
   ee = EpsilonElimination(obj)
 
   res = ee.eliminate()

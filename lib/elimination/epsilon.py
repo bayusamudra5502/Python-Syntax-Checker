@@ -74,4 +74,4 @@ class EpsilonElimination(Elimination):
     for i in rulesSet:
       result[i] = tuple(rulesSet[i])
 
-    return CFG(result, super().groups, list(super().terminals))
+    return CFG(result, super().groups, list(super().terminals), super().start)

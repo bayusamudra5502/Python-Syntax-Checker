@@ -7,7 +7,7 @@ import json
 from lib.fa.enfa import ENFA
 
 class CFG:
-  def __init__(self, rules: dict, groups: dict, terminals: list) -> None:
+  def __init__(self, rules: dict, groups: dict, terminals: list, start: str) -> None:
     tmpRules = rules
 
     for i in tmpRules:
@@ -20,6 +20,7 @@ class CFG:
     self.__rules = tmpRules
     self.__groups = groups
     self.__terminals = tuple(terminals)
+    self.__start = start
 
   @classmethod
   def loadFromJSON(cls, path: str) -> None:
@@ -28,7 +29,7 @@ class CFG:
     data = json.load(f)
     f.close()
 
-    return cls(data["rules"], data["groups"], data["terminals"])
+    return cls(data["rules"], data["groups"], data["terminals"], data["start"])
   
   @classmethod
   def loadFromYAML(cls, path: str) -> None:
@@ -37,7 +38,7 @@ class CFG:
     data = yaml.safe_load(f)
     f.close()
 
-    return cls(data["rules"], data["groups"], data["terminals"])
+    return cls(data["rules"], data["groups"], data["terminals"], data["start"])
   
   @property
   def groups(self) -> dict:
@@ -53,6 +54,11 @@ class CFG:
   def rules(self) -> dict:
     """Mendapatkan data CFG"""
     return self.__rules
+  
+  @property
+  def start(self) -> str:
+    """Mendapatkan starting point dari CFG"""
+    return self.__start
   
   def saveToYAML(self, path: str) -> None:
     """Simpan CFG ke file YAML"""
