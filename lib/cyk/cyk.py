@@ -1,10 +1,9 @@
 import json
-from typing import Counter
-from lexer import Lexer
+from lib.cyk.lexer import Lexer
 from lib.fa.enfa import ENFA
 
 # valid string/variable syntax
-var = ENFA("(a-z + A-Z + _)(a-z+A-Z+_+0-9)*")
+var = ENFA("(a-z+A-Z+\\_)(a-z+A-Z+\\_+0-9)*")
 string = ENFA("(a-z+A-Z+0-9)*")
 int = ENFA("(0-9)*")
 var.fit()
@@ -66,4 +65,3 @@ class CYK :
 
         return self.cyk_table 
 
-a = CYK("test.json","input.py")

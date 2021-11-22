@@ -35,6 +35,3 @@ class Lexer :
         self.tokens = [token for token in self.tokens if token!='']
         return self.tokens
         
-
-a = Lexer("input.py")
-print(a.tokenize())
