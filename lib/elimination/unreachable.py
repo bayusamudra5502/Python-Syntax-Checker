@@ -11,8 +11,8 @@ class UnreachableElimination(Elimination):
     super().__init__(cfg)
     self.__label = tuple(cfg.rules.keys())
     self.__lastTerminal = set()
-    self.__lastTerminal.union(cfg.groups.keys())
-    self.__lastTerminal.union(cfg.terminals)
+    self.__lastTerminal = self.__lastTerminal.union(cfg.groups.keys())
+    self.__lastTerminal = self.__lastTerminal.union(cfg.terminals)
     
   def __buildReachableTable(self):
     """Membangun Tabel Reachable"""
@@ -27,6 +27,14 @@ class UnreachableElimination(Elimination):
     
     self.__table = table
   
+  def __symbolReachable(self, rule: tuple):
+    """Mengembalikan True bila semua rule reachable"""
+    for i in rule:
+      if not i in self.__lastTerminal and not i in self.__reachable:
+        return False
+    
+    return True
+  
   def eliminate(self) -> CFG:
     """Menghilangkan semua unreachable symbol pada CFG."""
     
@@ -34,17 +42,18 @@ class UnreachableElimination(Elimination):
 
     closure = self.__table.transitiveClosure()
     startIdx = self.__label.index(super().start)
-    reachable = []
+    self.__reachable = []
 
     for j in range(len(self.__label)):
       if closure[startIdx, j]:
-        reachable.append(self.__label[j])
+        self.__reachable.append(self.__label[j])
     
     result = {}
     newTerminal = set()
 
-    for i in reachable:
-      result[i] = super().rules[i]
+    for i in self.__reachable:
+      # Menyaring rule hanya yang reachable
+      result[i] = tuple(filter(lambda x: self.__symbolReachable(x), super().rules[i]))
 
       # Memasukan reachable terminal
       for j in result[i]:

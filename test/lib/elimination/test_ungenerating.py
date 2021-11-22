@@ -89,7 +89,7 @@ def test_04():
     "groups":{},
     "terminals":["a","b"],
     "rules":{
-      "S": [["A","B"],["C","A"]],
+      "S": [["A","B"],["C","A"],["D","B","A"]],
       "A": [["a"]],
       "B": [["B","C"],["A","B"],[]],
       "C": [["a","B"],["b"]]
@@ -105,6 +105,36 @@ def test_04():
     "A": (("a",),),
     "B": (("B","C"),("A","B"), ()),
     "C": (("b",),("a","B"))
+  }
+
+  for i in ans:
+    a = res.rules[i]
+    b = ans[i]
+
+    assert set(a) == set(b)
+
+def test_05():
+  data = {
+    "groups":{
+      "variable": "(A-Z+a-z)(A-Z+a-z+0-9)*"
+    },
+    "terminals":["a","b"],
+    "rules":{
+      "S": [["A","B"],["A"],["D","B","A"]],
+      "A": [["a", "variable"]],
+      "B": [["B","C"],["A","B"]],
+      "C": [["a","B"],["b"]]
+    }
+  }
+
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"I")
+  ue = UngeneratingElimination(obj)
+
+  res = ue.eliminate()
+  ans = {
+    "S": (("A",),),
+    "A": (("a","variable"),),
+    "C": (("b",),)
   }
 
   for i in ans:
