@@ -16,14 +16,14 @@ class UngeneratingElimination(Elimination):
 
   def __buildTerminalTable(self):
     """Membentuk tabel terminal"""
-    self.__terminal.union(super().terminals)
-    self.__terminal.union(super().groups.keys())
+    self.__terminal = self.__terminal.union(super().terminals)
+    self.__terminal = self.__terminal.union(super().groups.keys())
 
   def isGenerating(self, rule: tuple) -> bool:
     """Mengembalikan true bila rule generating berdasarkan
     terminal table dan generating table saat ini"""
     for i in rule:
-      if not i in self.__terminal and not i in self.__generating:
+      if (not i in self.__terminal and not i in self.__generating):
         return False
     
     return True
