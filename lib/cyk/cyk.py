@@ -67,6 +67,3 @@ class CYK :
         return self.cyk_table 
 
 a = CYK("test.json","input.py")
-
-
-
