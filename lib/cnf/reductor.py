@@ -1,38 +1,25 @@
 """
-Module cnf
-Implementasi konverter CFG menjadi CNF
+module reductor
+Mereduksi CFG menjadi CNF-like CFG. Pada tahap ini, CNF tidak
+dilakukan penyederhanaan.
 """
 
-from lib.cfg import CFG
-from lib.elimination.epsilon import EpsilonElimination
-from lib.elimination.unit import  UnitElimination
-from lib.elimination.useless import UselessElimination
 
-class CNF:
-  """Kelas Konverter CFG menjadi CNF"""
+from lib.cfg import CFG
+from lib.cnf import Transformer
+
+class Reductor(Transformer):
+  """Kelas Pereduksi CFG menjadi dalam bentuk CNF-like CFG"""
   def __init__(self, cfg: CFG) -> None:
-    self.__cfg = cfg
-    self.__rules = {}
+    self.__rules = cfg.rules
     self.__symbolCnt = 0
 
     # Menghindari Runtime Error
-    self.__queue = []
-  
-  def __simplifyCFG(self):
-    """Melakukan simplifikasi CFG"""
-    ee = EpsilonElimination(self.__cfg).eliminate()
-    ue = UnitElimination(ee).eliminate()
-    newCFG = UselessElimination(ue).eliminate()
+    self.__queue = list(cfg.rules.keys())
 
-    self.__rules = {}
-    self.__terminals = newCFG.terminals
-    self.__groups = newCFG.groups
-    self.__start = newCFG.start
-
-    # Mengubah menjadi list supaya mutable
-    for i in newCFG.rules:
-      self.__rules[i] = list(newCFG.rules[i]) 
-      self.__queue.append(i)
+    self.__terminals = cfg.terminals
+    self.__groups = cfg.groups
+    self.__start = cfg.start
   
   def __getNewSymbol(self) -> str:
     """Mendapatkan Nama Symbol baru yang tidak ada di CFG"""
@@ -69,9 +56,6 @@ class CNF:
   
   def transform(self) -> CFG:
     """Melakukan pengubahan CFG menjadi dalam bentuk CNF"""
-
-    # Menyederhanakan CFG
-    self.__simplifyCFG()
 
     while(len(self.__queue) > 0):
       i = self.__queue.pop(0)
