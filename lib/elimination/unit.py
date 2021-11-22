@@ -13,18 +13,18 @@ class UnitElimination(Elimination):
     super().__init__(cfg)
 
   def __isUnitProd(self, test: tuple):
-    """Mengembalikan true bila test merupakan Symbol"""
+    """Mengembalikan true bila test merupakan Variabel"""
     if len(test) > 1:
       return False
     else:
-      return test[0] in super().groups.keys()
+      return test[0] in super().rules.keys()
     
   def __buildCookbook(self):
     """Membentuk rules tanpa adanya unit production"""
     self.__cookbook = {}
 
     for i in super().rules:
-      self.__cookbook[i] = set(map(lambda x: not self.__isUnitProd(x), super().rules[i]))
+      self.__cookbook[i] = set(filter(lambda x: not self.__isUnitProd(x), super().rules[i]))
   
   def __buildBoolMatrix(self):
     """Membentuk matriks boolean untuk keterhubungan"""
@@ -32,13 +32,13 @@ class UnitElimination(Elimination):
 
     unit = {}
     for i in super().rules:
-      unit[i] = tuple(map(lambda x: self.__isUnitProd(x), super().rules[i]))
+      unit[i] = tuple(filter(lambda x: self.__isUnitProd(x), super().rules[i]))
     
     self.__matrix = BoolMatrix(len(self.__label))
 
     for i in range(len(self.__label)):
       for j in unit[self.__label[i]]:
-        idx = self.__label.index(j)
+        idx = self.__label.index(j[0])
         self.__matrix.matrix[i,idx] = True
 
   
