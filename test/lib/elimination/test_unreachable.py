@@ -88,3 +88,70 @@ def test_03():
 
   assert set(res.terminals) == {"a","b"}
 
+def test_terminal_01():
+  data = {
+    "groups":{
+      "number": "(0-9)(0-9)*"
+    },
+    "terminals":["a","b"],
+    "rules":{
+      "S": [["A","S","B"],["A","B"]],
+      "A": [["a","A","S"],["number","S"],["a"]],
+      "B": [["S","b","S"],["b","S"]]
+    }
+  }
+
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"S")
+  ue = UnreachableElimination(obj)
+
+  res = ue.eliminate()
+  ans = {
+      "S": (("A","S","B"),("A","B")),
+      "A": (("a","A","S"),("number","S"),("a",)),
+      "B": (("S","b","S"),("b","S"))
+  }
+
+  for i in ans:
+    a = res.rules[i]
+    b = ans[i]
+
+    assert set(a) == set(b)
+
+  assert set(res.terminals) == {"a","b"}
+  assert res.groups == data["groups"]
+
+def test_terminal_02():
+  data = {
+    "groups":{
+      "number": "(0-9)(0-9)*",
+      "skipped": "(a-z)(A-Z)*"
+    },
+    "terminals":["a","b"],
+    "rules":{
+      "S": [["A","S","B"],["A","B"]],
+      "A": [["a","A","S"],["number","S"],["a"]],
+      "B": [["S","b","S"],["b","S"]],
+      "C": [["C","a"],["S","b"],["skipped"]]
+    }
+  }
+
+  obj = CFG(data["rules"], data["groups"], data["terminals"],"S")
+  ue = UnreachableElimination(obj)
+
+  res = ue.eliminate()
+  ans = {
+      "S": (("A","S","B"),("A","B")),
+      "A": (("a","A","S"),("number","S"),("a",)),
+      "B": (("S","b","S"),("b","S"))
+  }
+
+  for i in ans:
+    a = res.rules[i]
+    b = ans[i]
+
+    assert set(a) == set(b)
+
+  assert set(res.terminals) == {"a","b"}
+  assert res.groups == {
+    "number": "(0-9)(0-9)*"
+  }

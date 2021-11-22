@@ -50,6 +50,7 @@ class UnreachableElimination(Elimination):
     
     result = {}
     newTerminal = set()
+    newGroups = {}
 
     for i in self.__reachable:
       # Menyaring rule hanya yang reachable
@@ -59,6 +60,9 @@ class UnreachableElimination(Elimination):
       for j in result[i]:
         for k in j:
           if k in self.__lastTerminal:
-            newTerminal.add(k)
+            if k in super().groups:
+              newGroups[k] = super().groups[k]
+            else:
+              newTerminal.add(k)
       
-    return CFG(result, super().groups, list(newTerminal), super().start)
+    return CFG(result, newGroups, list(newTerminal), super().start)
