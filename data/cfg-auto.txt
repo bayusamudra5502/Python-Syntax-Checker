@@ -6,9 +6,59 @@ START
 Terminals:
 .
 ,
++
+-
+*
+/
+[
+]
+{
+}
+(
+)
+'
+"
+:
+;
+=
+!
+>
+<
+%
+~
+&
+if
+elif
+else
+for
+in
+is
+while
+continue
+break
+pass
+class
+number
+return
+def
+with
+raise
+import
+as
+from
+string
+and
+or
+not
+true
+false
+none
+}
+^
 
 Groups:
 name = (a-z+A-Z+\_)(a-z+A-Z+\_+0-9)*
+number = (0-9)(0-9)*
 
 Rules:
 START -> TEXTED
@@ -31,16 +81,16 @@ DOUBLE_QUOTE -> "
 COLON -> :
 SEMICOLON -> ;
 COMMA -> ,
-NEWLINE -> NEWLINE NEWLINE | __new_line__
-SPACE -> SPACE SPACE | __space__
-OR_SYM -> __or_sym__
+NEWLINE -> NEWLINE NEWLINE
+SPACE -> SPACE SPACE
+OR_SYM -> or
 REL_OP -> = = | ! = | < = | > = | < | > | IS
 ASS_OP -> = | + = | - = | * = | * * = | / = | / / = | % =
 ART_OP -> + | - | * | * * | / | / / | %
 LOG_OP -> AND | OR
 MEM_OP -> IN | NOT SPACE IN
 IDN_OP -> IS | IS SPACE NOT
-BIT_OP -> & | OR_SYM | ^ | > > | < < | ~\
+BIT_OP -> & | OR_SYM | ^ | > > | < < | ~
 IF -> if
 ELIF -> elif
 ELSE -> else
@@ -105,7 +155,7 @@ VARIABLE -> OPEN_NORMAL_BRACKET VARIABLE CLOSE_NORMAL_BRACKET | VAR_CTN
 IDX -> VARIABLE | CONSTANT | ART_OPERATION
 VAR_CTN -> NAME | NAME VAR_IDX | METH_TEXTED_NAME | METH_TEXTED_NAME VAR_IDX
 VAR_IDX -> VAR_IDX VAR_IDX | [ IDX ] | [ COLON ] | [ IDX COLON ] | [ COLON IDX ] | [ IDX COLON IDX ] | [ COLON COLON ] | [ COLON COLON IDX ] | [ COLON IDX COLON ] | [ COLON IDX COLON IDX ] | [ IDX COLON COLON ] | [ IDX COLON COLON IDX ] | [ IDX COLON IDX COLON ] | [ IDX COLON IDX COLON IDX ]
-STRING -> z | z VAR_IDX | STRING MULTIPLY POSITIVE_NUMBER | STRING PLUS STRING
+STRING -> string | string VAR_IDX | STRING MULTIPLY POSITIVE_NUMBER | STRING PLUS STRING
 AND -> and
 OR -> or
 NOT -> not
