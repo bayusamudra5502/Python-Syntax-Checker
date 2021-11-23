@@ -53,11 +53,10 @@ false
 none
 }
 ^
-__new_line__
-__space__
-__or_sym__
 
 Groups:
+__space__ = \ 
+__new_line__ = \n
 name = (a-z+A-Z+\_)(a-z+A-Z+\_+0-9)*
 number = (0-9)(0-9)*
 
@@ -87,7 +86,7 @@ SEMICOLON -> ;
 COMMA -> ,
 NEWLINE -> NEWLINE NEWLINE | __new_line__
 SPACE -> SPACE SPACE | __space__
-OR_SYM -> __or_sym__
+OR_SYM -> or
 REL_OP -> = = | ! = | < = | > = | < | > | IS
 ASS_OP -> = | + = | - = | * = | * * = | / = | / / = | % =
 ART_OP -> + | - | * | * * | / | / / | %

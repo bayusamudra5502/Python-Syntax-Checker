@@ -52,7 +52,12 @@ def loadCFG(file: str) -> CFG:
         groupName, groupData = i.split("=")
         groupName = groupName.strip()
         groupData = groupData.strip()
-        result["groups"][groupName] = groupData
+
+        if groupData == "\\n":
+          result["groups"][groupName] = "\n"
+        else:
+          result["groups"][groupName] = groupData
+          
   
   skipNonAlpha = False
 
