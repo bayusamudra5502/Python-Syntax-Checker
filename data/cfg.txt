@@ -43,7 +43,7 @@ ART_OP -> + | - | * | * * | / | / / | %
 LOG_OP -> AND | OR
 MEM_OP -> IN | NOT SPACE IN
 IDN_OP -> IS | IS SPACE NOT
-BIT_OP -> & | OR_SYM | ^ | > > | < < | ~\
+BIT_OP -> & | OR_SYM | ^ | > > | < < | ~
 
 
 // CONDITIONAL

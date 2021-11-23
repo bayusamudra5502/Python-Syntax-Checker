@@ -19,6 +19,7 @@ def loadCFG(file: str) -> CFG:
   }
 
   mode = 0
+  mayTerminal = set()
 
   for i in data:
     if len(i) >= 2 and i[:2] == "//" or len(i) == 0 or i.isspace():
@@ -38,9 +39,13 @@ def loadCFG(file: str) -> CFG:
         ruleName, ruleData = i.split("->")
         ruleName = ruleName.strip()
 
-        truncatedRule = map(lambda x: x.strip().split(" ") ,ruleData.split("|"))
+        truncatedRule = list(map(lambda x: x.strip().split(" ") ,ruleData.split("|")))
 
-        result["rules"][ruleName] = list(truncatedRule)
+        for j in truncatedRule:
+          for k in j:
+            mayTerminal.add(k)
+
+        result["rules"][ruleName] = truncatedRule
       elif mode == 3:
         result["terminals"].append(i)
       elif mode == 4:
@@ -48,6 +53,18 @@ def loadCFG(file: str) -> CFG:
         groupName = groupName.strip()
         groupData = groupData.strip()
         result["groups"][groupName] = groupData
+  
+  skipNonAlpha = False
+
+  for i in mayTerminal:
+    if not i in result["terminals"] and \
+        not i in result["groups"] or \
+        not i in result["rules"]:
+      if not i.isalpha() and skipNonAlpha:
+        continue
+
+      print("\033[33mWarning:\033[0m", end=" ")
+      print(f"Symbol '{i}' was not found either in terminals nor groups name.")
   
   return CFG(result["rules"], result["groups"], result["terminals"], result["start"])
 
