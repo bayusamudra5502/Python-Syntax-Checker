@@ -53,6 +53,9 @@ false
 none
 }
 ^
+__new_line__
+__space__
+__or_sym__
 
 Groups:
 name = (a-z+A-Z+\_)(a-z+A-Z+\_+0-9)*
