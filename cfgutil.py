@@ -9,6 +9,7 @@ import argparse
 
 from lib.converter.cfg import convertCFGToJson, convertCFGToYaml
 from lib.cfg import CFG
+from lib.cnf.cnf import CNF
 
 parser = argparse.ArgumentParser(description="CFG Utility")
 parser.add_argument("input", help="Input file path")
@@ -38,23 +39,29 @@ if not os.access(os.path.dirname(os.path.abspath(args.output)), os.W_OK):
   exit(-1)
 
 if args.mode[0] == "cnf":
-  if args.input_format[0] == "json" and args.output_format[0] == "json":
-    print("\033[36mConverting CFG to CNF\033[0m")
-    pass
-  elif args.input_format[0] == "yaml" and args.output_format[0] == "json":
-    print("\033[36mConverting CFG to CNF\033[0m")
-    pass
-  elif args.input_format[0] == "json" and args.output_format[0] == "yaml":
-    print("\033[36mConverting CFG to CNF\033[0m")
-    pass
-  elif args.input_format[0] == "yaml" and args.output_format[0] == "yaml":
-    print("\033[36mConverting CFG to CNF\033[0m")
-    pass
-  else:
+  if args.input_format[0] == "formatted" or args.output_format[0] == "formatted":
     print("\033[31mError:\033[0m", end=" ")
     print("Input format or output format is not allowed in this mode. Allowed format: {yaml. json}")
     print()
     exit(-1)
+  
+  print("\033[36mConverting CFG to CNF\033[0m")
+  print(f"Mode : {args.input_format[0]} -> {args.output_format[0]}")
+  print("")
+
+  rule = None
+  if args.input_format[0] == "json":
+    rule = CFG.loadFromJSON(args.input)
+  else:
+    rule = CFG.loadFromYAML(args.input)
+
+  cnf = CNF(rule)
+  res = cnf.transform()
+
+  if args.output_format[0] == "json":
+    res.saveToJSON(args.output)
+  else:
+    res.saveToYAML(args.output)
 elif args.input_format != args.output_format:
   print("\033[36mTranslating CFG Format\033[0m")
   print(f"Mode : {args.input_format[0]} -> {args.output_format[0]}")
