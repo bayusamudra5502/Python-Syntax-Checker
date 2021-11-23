@@ -41,3 +41,6 @@ print("Version: 1.0.0")
 print()
 
 # Do something
+cykObj = CYK(args.config[0], args.path)
+cykObj.parse()
+print(cykObj.validityCheck())

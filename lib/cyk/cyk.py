@@ -1,6 +1,7 @@
 import json
 from lib.cyk.lexer import Lexer
 from lib.fa.enfa import ENFA
+from lib.cfg import CFG
 
 # valid string/variable syntax
 var = ENFA("(a-z+A-Z+\\_)(a-z+A-Z+\\_+0-9)*")
@@ -17,8 +18,8 @@ class CYK :
         self.tokens = cs.tokenize()     # tokenize source code input
         self.length = len(self.tokens)
         self.cyk_table = None
-        file = open(grammar_file, 'r')  # load grammar
-        self.grammar = json.load(file)['rules']
+        self.__cfgobj = CFG.loadFromJSON(grammar_file)
+        self.grammar = self.__cfgobj.rules
         self.cnf = {}
         # convert to { rightHandProduction : leftHandProduction for easier matching}
         for x,y in self.grammar.items():
@@ -30,21 +31,27 @@ class CYK :
                 else :
                     self.cnf[combined].append(x)
 
-                
+
     def parse(self) :
 
-        self.cyk_table = [[[] for i in range(self.length-j)] for j in range(self.length)]
+        self.cyk_table = [[[] for _ in range(self.length-j)] for j in range(self.length)]
         # isi baris pertama
         for i, t in enumerate(self.tokens):
             try :
-                self.cyk_table[0][i].extend(self.cnf[t])
+                if self.cnf[t] in self.cyk_table[0][i] :
+                    continue
+                else :    
+                    self.cyk_table[0][i].extend(self.cnf[t])
             except KeyError :
                 if (var.match(t)):
-                    self.cyk_table[0][i].extend(self.cnf['name']) # tergantung hasil cnf
+                    if not self.cnf['name'] in self.cyk_table[0][i] :
+                       self.cyk_table[0][i].extend(self.cnf['name']) # tergantung hasil cnf    
                 elif (string.match(t)):
-                    self.cyk_table[0][i].extend(self.cnf['string']) # tergantung hasil cnf
+                    if not self.cnf['string'] in self.cyk_table[0][i] :
+                        self.cyk_table[0][i].extend(self.cnf['string']) # tergantung hasil cnf
                 elif (int.match(t)):
-                    self.cyk_table[0][i].extend(self.cnf['number']) # tergantung hasil cnf
+                    if not self.cnf['number'] in self.cyk_table[0][i] :
+                        self.cyk_table[0][i].extend(self.cnf['number']) # tergantung hasil cnf
                 else :
                     continue
         
@@ -54,14 +61,22 @@ class CYK :
                 for k in range(1,i):
 
                     cell1 = self.cyk_table[k-1][j-1]
-                    cell2 = self.cyk_table[k-1][j-1]
+                    cell2 = self.cyk_table[i-k-1][j+k-1]
 
                     for a in cell1 :
                         for b in cell2 :
                             try :
-                                self.cyk_table[i-1][j-1].extend(self.cnf[a+b])  
-                            except :
+                                if not self.cnf[a+b] in self.cyk_table[i-1][j-1] :
+                                    cykTmp = set(self.cyk_table[i-1][j-1])
+                                    cykTmp = cykTmp.union(self.cnf[a+b])
+                                    self.cyk_table[i-1][j-1] = list(cykTmp)  
+                            except KeyError:
                                 continue
 
         return self.cyk_table 
 
+    def validityCheck (self) :
+        if self.__cfgobj.start in self.cyk_table[-1][-1] :
+            return True
+        else :
+            return False
