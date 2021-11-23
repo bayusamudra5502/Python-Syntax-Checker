@@ -56,15 +56,16 @@ def loadCFG(file: str) -> CFG:
   
   skipNonAlpha = False
 
+  print()
   for i in mayTerminal:
     if not i in result["terminals"] and \
-        not i in result["groups"] or \
+        not i in result["groups"] and \
         not i in result["rules"]:
       if not i.isalpha() and skipNonAlpha:
         continue
 
       print("\033[33mWarning:\033[0m", end=" ")
-      print(f"Symbol '{i}' was not found either in terminals nor groups name.")
+      print(f"Symbol '{i}' is not defined.")
   
   return CFG(result["rules"], result["groups"], result["terminals"], result["start"])
 
