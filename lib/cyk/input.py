@@ -1,1 +1,4 @@
-print(2+34)
+imported = 2 
+
+def plus1 (x) :
+    x = x + 1

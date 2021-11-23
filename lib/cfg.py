@@ -23,7 +23,7 @@ class CFG:
     self.__start = start
 
   @classmethod
-  def loadFromJSON(cls, path: str) -> None:
+  def loadFromJSON(cls, path: str):
     """Memuat data dari file JSON."""
     f = open(path)
     data = json.load(f)
@@ -32,14 +32,14 @@ class CFG:
     return cls(data["rules"], data["groups"], data["terminals"], data["start"])
   
   @classmethod
-  def loadFromYAML(cls, path: str) -> None:
+  def loadFromYAML(cls, path: str):
     """Memuat data dari file YAML."""
     f = open(path)
     data = yaml.safe_load(f)
     f.close()
 
     return cls(data["rules"], data["groups"], data["terminals"], data["start"])
-  
+
   @property
   def groups(self) -> dict:
     """Mengembalikan groups CFG"""
@@ -64,22 +64,40 @@ class CFG:
     """Simpan CFG ke file YAML"""
     f = open(path, "w")
     obj = {
+      "start": self.__start,
       "groups": self.__groups,
-      "terminals": self.__terminals,
-      "rules": self.__groups
+      "terminals": list(self.__terminals),
+      "rules": self.__rules
     }
+
+
+    for i in obj["rules"]:
+      data = list(obj["rules"][i])
+      for j in range(len(data)):
+        data[j] = list(data[j])
+      
+      obj["rules"][i] = list(data)
     
-    yaml.dump(obj, f)
+    yaml.dump(obj, f, default_flow_style=False)
     f.close()
   
   def saveToJSON(self, path:str):
     """Simpan CFG ke file JSON"""
     f = open(path, "w")
+
     obj = {
+      "start": self.__start,
       "groups": self.__groups,
-      "terminals": self.__terminals,
-      "rules": self.__groups
+      "terminals": list(self.__terminals),
+      "rules": self.__rules
     }
+
+    for i in obj["rules"]:
+      data = list(obj["rules"][i])
+      for j in range(len(data)):
+        data[j] = list(data[j])
+      
+      obj["rules"][i] = list(data)
     
     json.dump(obj, f)
     f.close()
@@ -89,13 +107,29 @@ class CFG:
     f = open(path, "w")
     
     lines = []
+    lines.append("// Version: 1.0.0\n\n")
+    lines.append("Start:\n")
+    lines.append(self.__start + "\n")
+    lines.append("\n")
+
+    lines.append("Terminals:\n")
+    for i in self.__terminals:
+      lines.append(i + "\n")
+    
+    lines.append("\n")
+    lines.append("Groups:\n")
+    for i in self.__groups:
+      lines.append(f"{i} = {self.__groups[i]}\n")
+
+    lines.append("\n")
+    lines.append("Rules:\n")
     for i in self.__rules:
       symbolStr = []
       for j in self.__rules[i]:
         symbolStr.append(" ".join(j))
 
       strRule = f"{i} -> {' | '.join(symbolStr)}"
-      lines.append(strRule)
+      lines.append(strRule + "\n")
     
     f.writelines(lines)
     f.close()
