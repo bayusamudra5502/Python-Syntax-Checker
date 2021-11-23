@@ -51,7 +51,11 @@ def loadCFG(file: str) -> CFG:
       elif mode == 4:
         groupName, groupData = i.split("=")
         groupName = groupName.strip()
-        groupData = groupData.strip()
+
+        if groupData.strip() != "\\":
+          groupData = groupData.strip()
+        else:
+          groupData = " "
 
         if groupData == "\\n":
           result["groups"][groupName] = "\n"

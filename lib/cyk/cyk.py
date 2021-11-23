@@ -40,7 +40,7 @@ class CYK :
                 self.cyk_table[0][i].extend(self.cnf[t])
             except KeyError :
                 if (var.match(t)):
-                    self.cyk_table[0][i].extend(self.cnf['variable']) # tergantung hasil cnf
+                    self.cyk_table[0][i].extend(self.cnf['name']) # tergantung hasil cnf
                 elif (string.match(t)):
                     self.cyk_table[0][i].extend(self.cnf['string']) # tergantung hasil cnf
                 elif (int.match(t)):
