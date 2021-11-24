@@ -1,0 +1,1 @@
+a, t, f = input().split("fdsa")

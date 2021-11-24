@@ -10,12 +10,11 @@ class Lexer :
         self.tokens = file.read().split()
         file.close()
         
-        self.reserved = [r'\\',"\\.","!=", "%", "%=", "&", "&=", r'\(', r'\)', r'\*', r'\*\*',
+        self.reserved = [ r'\\',"\\.","!=", "%", "%=", "&", "&=", r'\(', r'\)', r'\*', r'\*\*',
         r'\*\*\=', r'\*\=',r'\+',",", "-", "-=", "/", "//", "//=", "/=",
         ":", ";", "<", "<<", "<<=","<=", "<>", "=", "==", ">", ">=", ">>", ">>=",
         "@", r'\[', r'\]', "\\^", "\\^=", "`",r'\'\'\'', r'\'', r'\"',r'\+\=']
     
-    # "Hali]o,dunia"
     def tokenize(self) :
         for reserved in self.reserved :
             tempTokens = []

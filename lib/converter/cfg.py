@@ -78,7 +78,7 @@ def loadCFG(file: str) -> CFG:
   
   return CFG(result["rules"], result["groups"], result["terminals"], result["start"])
 
-def convertCFGToJson(file: str, output: str) -> None:
+def convertCFGToJson(file: str, output: str):
   obj = loadCFG(file)
   obj.saveToJSON(output)
 

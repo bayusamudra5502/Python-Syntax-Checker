@@ -1,2 +1,2 @@
-X = 'HEHEHEHE'
-print(X)
+
+Print("Halo","Dunia")
