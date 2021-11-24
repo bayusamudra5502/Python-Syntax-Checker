@@ -10,16 +10,17 @@ class Lexer :
         self.tokens = file.read().split()
         file.close()
         
-        self.reserved = ["!=", "%", "%=", "&", "&=", r'\(', r'\)', r'\*', r'\*\*',
-        r'\*\*\=', r'\*\=', r'\+', r'\+\=',",", "-", "-=", "/", "//", "//=", "/=",
+        self.reserved = [ "\\.","!=", "%", "%=", "&", "&=", r'\(', r'\)', r'\*', r'\*\*',
+        r'\*\*\=', r'\*\=',r'\+',",", "-", "-=", "/", "//", "//=", "/=",
         ":", ";", "<", "<<", "<<=","<=", "<>", "=", "==", ">", ">=", ">>", ">>=",
-        "@", r'\[', r'\]', "^", "^=", "`",r'\'\'\'', r'\'', r'\"']
-
+        "@", r'\[', r'\]', "\\^", "\\^=", "`",r'\'\'\'', r'\'', r'\"',r'\+\=']
+    
+    # "Hali]o,dunia"
     def tokenize(self) :
         for reserved in self.reserved :
             tempTokens = []
             for string in self.tokens :
-                format = r"[A..z]*(" + reserved +r")[A..z]*"
+                format = r"(" + reserved +r")"
                 splitted = re.split(format, string)
                 for splitString in splitted :
                     tempTokens.append(splitString)
@@ -35,3 +36,5 @@ class Lexer :
         self.tokens = [token for token in self.tokens if token!='']
         return self.tokens
         
+# a = Lexer("lib/cyk/input.py").tokenize()
+# print(a)

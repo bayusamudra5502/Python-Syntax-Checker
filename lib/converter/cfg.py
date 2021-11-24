@@ -22,7 +22,7 @@ def loadCFG(file: str) -> CFG:
   mayTerminal = set()
 
   for i in data:
-    if len(i) >= 2 and i[:2] == "//" or len(i) == 0 or i.isspace():
+    if len(i) > 2 and i[:2] == "//" and not i == "//=" or len(i) == 0 or i.isspace():
       pass
     elif len(i) >= 6 and i[:6] == "Start:":
       mode = 1

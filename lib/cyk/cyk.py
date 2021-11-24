@@ -46,10 +46,10 @@ class CYK :
                 if (var.match(t)):
                     if not self.cnf['name'] in self.cyk_table[0][i] :
                        self.cyk_table[0][i].extend(self.cnf['name']) # tergantung hasil cnf    
-                elif (string.match(t)):
+                if (string.match(t)):
                     if not self.cnf['string'] in self.cyk_table[0][i] :
                         self.cyk_table[0][i].extend(self.cnf['string']) # tergantung hasil cnf
-                elif (int.match(t)):
+                if (int.match(t)):
                     if not self.cnf['number'] in self.cyk_table[0][i] :
                         self.cyk_table[0][i].extend(self.cnf['number']) # tergantung hasil cnf
                 else :
