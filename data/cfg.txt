@@ -53,18 +53,6 @@ false
 none
 }
 ^
-*==
-/=
-%=
--=
->>
-**
-**=
-+=
-//=
-//
-*=
-<<
 \
 
 Groups:
@@ -97,13 +85,14 @@ SEMICOLON -> ;
 COMMA -> ,
 SPACE -> SPACE SPACE
 OR_SYM -> or
+EQ_SYM -> =
 REL_OP -> = = | ! = | < = | > = | < | > | IS
-ASS_OP -> = | += | -= | *= | **= | /= | //= | %=
-ART_OP -> + | - | * | ** | / | // | %
+ASS_OP -> = | PLUS EQ_SYM | - = | * = | * * = | / = | / / = | % =
+ART_OP -> + | - | * | * * | / | / / | %
 LOG_OP -> AND | OR
 MEM_OP -> IN | NOT SPACE IN
 IDN_OP -> IS | IS SPACE NOT
-BIT_OP -> & | OR_SYM | ^ | >> | << | ~
+BIT_OP -> & | OR_SYM | ^ | > > | < < | ~
 BACKSLASH -> \
 
 // CONDITIONAL
