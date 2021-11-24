@@ -1,2 +1,1 @@
-
-Print("Halo","Dunia")
+123a = "hallo dunia"

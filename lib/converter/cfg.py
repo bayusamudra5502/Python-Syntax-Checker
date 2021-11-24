@@ -1,6 +1,6 @@
 """
-module CFG2Json
-Melakukan loading file cfg.txt sesuai format dan mengubahnya ke file json
+module CFG2
+Melakukan loading file cfg.txt sesuai format dan mengubahnya ke file json atau yaml
 """
 
 from lib.cfg import CFG

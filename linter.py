@@ -11,7 +11,7 @@ parser.add_argument("path",
   help="python script path", type=str)
 
 parser.add_argument("-c","--config", type=str, action="store", 
-  help="CNF Config file (JSON format)", nargs=1)
+  help="CNF Config file (JSON format)", nargs=1, required=True)
 
 args = parser.parse_args()
 

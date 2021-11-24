@@ -1,3 +1,6 @@
 x = 3
 for i in range(x) :
-    print( x is not i) 
+    if i == 0 :
+        break
+    elif i == 1:
+        pass
