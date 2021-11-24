@@ -27,6 +27,6 @@ python linter.py -c data/cnf.json namafile.py
 ```
 contohnya dapat dilihat di bawah ini di mana file diletakkan di directory test
 
-'''
+```
 python linter.py -c data/cnf.json test/tc/tc0.py
-'''
+```
