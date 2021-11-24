@@ -1,5 +1,5 @@
 """
-module CFG2
+module cfg
 Melakukan loading file cfg.txt sesuai format dan mengubahnya ke file json atau yaml
 """
 

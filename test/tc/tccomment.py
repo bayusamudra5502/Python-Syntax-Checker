@@ -1,15 +1,17 @@
 
-x = "a"
+x = [2,3,4]
+i = 2
 
-if x == 0:
-  X = 0
-elif x + 4 == 1:
-  if True:
-      x = 3
-  else:
-    x = 2
-elif x == 32:
-  x = 4
-else:
-  ''' This is a sample multiline comment '''
-  x = "Doodoo"
+while True :
+    print("1")
+    print("2")
+    print("3")
+    break
+  
+while not False and i > 2:
+    if x[1] == None:
+      continue
+    elif x[1] == 2:
+      break
+    else:
+      pass

@@ -1,6 +1,1 @@
-123a = 12
-print(123a)
-
-
-
-
+123a = "hallo dunia"
