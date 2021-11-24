@@ -23,10 +23,9 @@ This web was made under several conditions:
 To run this program, you can run this command in terminal:
 
 ```
-python linter.py -c data/cnf.json namafile.py
+python linter.py -c data/cnf.json filename.py
 ```
-contohnya dapat dilihat di bawah ini di mana file diletakkan di directory test
-
+you can see the example below
 ```
 python linter.py -c data/cnf.json test/tc/tc0.py
 ```
