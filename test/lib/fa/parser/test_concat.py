@@ -19,6 +19,7 @@ def test_01():
   concat_tester("(1+3+5)",("(1+3+5)",))
   concat_tester("abc",("a","b","c"))
   concat_tester("a-z",("a-z",))
+  concat_tester("\x00-\xff",("\x00-\xff",))
 
 def test_02():
   concat_tester("(a-z)*",("(a-z)*",))

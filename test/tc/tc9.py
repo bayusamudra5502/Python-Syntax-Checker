@@ -1,1 +1,1 @@
-A = ["halo"]
+print("\n")

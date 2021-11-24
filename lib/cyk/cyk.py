@@ -5,7 +5,7 @@ from lib.cfg import CFG
 
 # valid string/variable syntax
 var = ENFA("(a-z+A-Z+\\_)(a-z+A-Z+\\_+0-9)*")
-string = ENFA("(a-z+A-Z+0-9)*")
+string = ENFA("(\x00-\x5b+\x5d-\xff)*")
 int = ENFA("(0-9)*")
 var.fit()
 string.fit()

@@ -123,7 +123,7 @@ def rangeParser(regex: str) -> tuple:
       start = ord(i)
   
   if isOpFound:
-    newRule = "+".join([chr(i) for i in range(start,end+1)])
+    newRule = "+".join(["\\"+chr(i) for i in range(start,end+1)])
     return newRule, (len(newRule) > 0)
   else:
     return regex, False
@@ -225,8 +225,8 @@ def terminalParser(regex: str) -> str:
     if len(regex) == 2:
       return regex[1]
     else:
-      raise SyntaxError("Terminal haruslah memiliki hanya satu symbol")
+      raise SyntaxError(f"Terminal haruslah memiliki hanya satu symbol. Didapat '{regex}'.")
   elif len(regex) > 1:
-    raise SyntaxError("Terminal haruslah memiliki hanya satu symbol")
+    raise SyntaxError(f"Terminal haruslah memiliki hanya satu symbol. Didapat '{regex}'.")
   else:
     return regex

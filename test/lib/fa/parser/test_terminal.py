@@ -5,6 +5,8 @@ def isEqual(regex, ans):
 
 def test_terminal_1():
   assert isEqual("","")
+  assert isEqual("\\\\","\\")
+  assert isEqual("\.",".")
 
 def test_terminal_2():
   assert isEqual(r"\n","n")
